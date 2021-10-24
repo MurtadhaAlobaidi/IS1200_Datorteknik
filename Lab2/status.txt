@@ -1,0 +1,11 @@
+Assignment 1 (Completed)	- prime.c & prime
+
+Assignment 2 (Completed)	- print_primes.c 
+
+Assignment 3 (Completed)	- sieves.c & sieves_heap.c
+
+Assignment 4 (Completed)	- pointers.asm & pointers.c 
+
+Assignment 5 (Completed)	- uno32tests & Labb2-5.jpg & Labb2-51.jpg
+
+sieves-suprise- #1601.c
