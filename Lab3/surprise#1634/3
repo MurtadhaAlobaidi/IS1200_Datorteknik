@@ -1,0 +1,82 @@
+
+time2string:
+	PUSH	($ra)
+	PUSH	($s0)	# Return address for printing
+	PUSH	($s1)	# Constant value of argument 1
+	
+	add	$s0, $zero, $a0	# s0 = 0 + a0(address)
+	add	$s1, $zero, $a1	# s1 = 0 + a1(address)
+	lw	$s2, ($ra)
+	
+	#PUSH	($s0)
+	#lw	$s0, 4($sp)
+	#addi	$s0, $0, 0x05
+	#lw	$s0, 4($sp)
+	#POP	($s0)
+	#nop
+	
+	#0xF000 >> 0xF00 >> 0xF0 >> 0xF
+	
+		
+	addi	$t0, $zero, 0xF000	# t7 är vilket nummer den ska välja
+	addi	$t1, $zero, 12		# t1 är shift left variable
+	addi	$t2, $zero, 0x00
+	#addi	$t3, $zero, 0x00
+	#srlv	$a0,$a1,$t1		# Shift lelf with variable
+	#sub	$t1, $t1, 4		# Subtract
+	#sw	$zero, ($s0)
+
+loop:
+	add	$s2, $zero, $t1
+	and	$t4, $s1, $t0		# t2 = s1 * t0
+	srlv	$a0, $t4, $t1
+	jal	hexasc
+	
+	#sllv	$v0, $v0, $t2		# v0 = v0 << t3
+	#sllv	$v0, $v0, $t2
+	#lw	$t5, ($s0)		# Load from stack
+	#or	$v0, $v0, $t5		# Add to, new value = new value + previous value
+	
+	#sw	$v0, 0($s0)
+	
+	beq	$t0, 0xF000, fs		# fs = first second
+	beq	$t0, 0x0F00, ss		# ss = second second
+	beq	$t0, 0x00F0, fm		# fm = first minute
+	beq	$t0, 0x000F, sm		# sm = second minute
+
+contiune:
+	sub	$t1, $t1, 4		# t1 = t1 - 4
+	srl	$t0, $t0, 4		# shift left för att välja nästa nummer
+	
+	addiu	$t2, $t2, 8
+	#sllv	$t3, $t3, $t2
+	#beq	$t0, 0xF0, addColon
+	bne	$t0, $zero, loop
+
+	
+	POP	($ra)
+	POP	($s0)
+	POP	($s1)
+	
+	jr	$ra	
+	nop
+	
+fs:	sb	$v0, 0($s0)
+	j	contiune
+	
+ss:	sb	$v0, 1($s0)
+	j	contiune
+
+fm:	sb	$v0, 2($s0)
+	j	contiune
+
+sm:	sb	$v0, 3($s0)	
+	j	contiune
+
+addColon:
+	lw	$t5, ($s0)
+	ori	$v0, $t5, 0x3A0000
+	sw	$v0, ($s0)
+	srl	$t0, $t0, 4		# shift left för att välja nästa nummer
+	
+	j	loop
