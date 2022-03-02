@@ -1,5 +1,5 @@
 # IS1200 Datorteknik kurs i KTH
-## Labration and projckt
+## Laboratory and project
 * Lab 1
 * Lab 2
 * Lab 3
