@@ -4,4 +4,4 @@
 * Lab 2
 * Lab 3
 * Lab 4
-* projckt(Snake)
+* projckt(Snake in the chipKIT Uno32)
